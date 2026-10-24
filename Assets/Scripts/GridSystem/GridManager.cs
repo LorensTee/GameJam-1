@@ -24,13 +24,51 @@ public class GridManager : MonoBehaviour
     private void Awake()
     {
         InitializeGrid();
+        AssignCellTypesFromTags();
+    }
+
+    private void AssignCellTypesFromTags()
+    {
+        GameObject[] wallObjects = GameObject.FindGameObjectsWithTag("Wall");
+        foreach (GameObject wall in wallObjects)
+        {
+            Vector2Int cell = WorldToCell(wall.transform.position);
+            Node node = GetNode(cell);
+
+            if (node != null)
+            {
+                node.OccupantType = CellType.Wall;
+                node.IsWalkable = false;
+            }
+        }
+
+        GameObject[] crateObjects = GameObject.FindGameObjectsWithTag("Crate");
+        foreach (GameObject crate in crateObjects)
+        {
+            Vector2Int cell = WorldToCell(crate.transform.position);
+            Node node = GetNode(cell);
+
+            if (node != null)
+            {
+                GridMover crateMover = crate.GetComponent<GridMover>();
+                if (crateMover != null)
+                {
+                    crateMover.Initialize(this, cell); // Handles snapping and setting CellType.Crate
+                }
+            }
+        }
     }
 
     private void InitializeGrid()
     {
-        for (int x = 0; x < gridSize.x; x++)
+        grid.Clear();
+
+        int halfX = gridSize.x / 2;
+        int halfY = gridSize.y / 2;
+
+        for (int x = -halfX; x <= halfX; x++)
         {
-            for (int y = 0; y < gridSize.y; y++)
+            for (int y = -halfY; y <= halfY; y++)
             {
                 Vector2Int coords = new Vector2Int(x, y);
                 grid.Add(coords, new Node(coords));
@@ -40,7 +78,11 @@ public class GridManager : MonoBehaviour
 
     public bool IsInBounds(Vector2Int coords)
     {
-        return coords.x >= 0 && coords.x < gridSize.x && coords.y >= 0 && coords.y < gridSize.y;
+        int halfX = gridSize.x / 2;
+        int halfY = gridSize.y / 2;
+
+        return coords.x >= -halfX && coords.x <= halfX &&
+            coords.y >= -halfY && coords.y <= halfY;
     }
 
     public Node GetNode(Vector2Int coords)
@@ -167,8 +209,9 @@ public class GridManager : MonoBehaviour
 
     public Vector2Int WorldToCell(Vector3 worldPos)
     {
-        int x = Mathf.RoundToInt(worldPos.x / (float)unitGridSize);
-        int y = Mathf.RoundToInt(worldPos.z / (float)unitGridSize);
+        Vector3 localPos = worldPos - gridOrigin;
+        int x = Mathf.RoundToInt(localPos.x / (float)unitGridSize);
+        int y = Mathf.RoundToInt(localPos.z / (float)unitGridSize);
         return new Vector2Int(x, y);
     }
 }

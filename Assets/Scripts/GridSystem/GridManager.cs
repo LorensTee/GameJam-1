@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,6 +25,10 @@ public class GridManager : MonoBehaviour
     private void Awake()
     {
         InitializeGrid();
+    }
+
+    private void Start()
+    {
         AssignCellTypesFromTags();
     }
 
@@ -53,7 +58,7 @@ public class GridManager : MonoBehaviour
                 GridMover crateMover = crate.GetComponent<GridMover>();
                 if (crateMover != null)
                 {
-                    crateMover.Initialize(this, cell); // Handles snapping and setting CellType.Crate
+                    crateMover.Initialize(this, cell);
                 }
             }
         }
@@ -108,18 +113,6 @@ public class GridManager : MonoBehaviour
         Node targetNode = GetNode(targetCell);
         if (targetNode == null || !targetNode.IsWalkable) return false;
 
-        // if the target cell is empty
-        if (targetNode.IsAvailable)
-        {
-            targetNode.IsReserved = true;
-
-            result.CanMove = true;
-            result.IsPushingCrate = false;
-            result.PlayerTarget = targetCell;
-
-            playerMover.StartMove(targetCell);
-            return true;
-        }
 
         // if the target cell has a movable crate
         if (targetNode.OccupantType == CellType.Crate && !targetNode.IsLocked)
@@ -149,7 +142,24 @@ public class GridManager : MonoBehaviour
                 // move them both
                 playerMover.StartMove(targetCell);
                 crateMover.StartMove(crateTargetCell);
+
+                return true;
             }
+
+            return false;
+        }
+
+        // if the target cell is empty
+        if (targetNode.OccupantType == CellType.Empty && !targetNode.IsReserved)
+        {
+            targetNode.IsReserved = true;
+
+            result.CanMove = true;
+            result.IsPushingCrate = false;
+            result.PlayerTarget = targetCell;
+
+            playerMover.StartMove(targetCell);
+            return true;
         }
 
         return false;

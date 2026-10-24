@@ -121,9 +121,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2932532713938500905}
+  - component: {fileID: 8579550113035520385}
   m_Layer: 0
   m_Name: Crate
-  m_TagString: Untagged
+  m_TagString: Crate
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -144,3 +145,17 @@ Transform:
   - {fileID: 2683454116787115470}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8579550113035520385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1722767712117350612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdceef5ee09b6d941b4778861ee92f89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GridMover
+  moveDuration: 0.2
+  occupantType: 2

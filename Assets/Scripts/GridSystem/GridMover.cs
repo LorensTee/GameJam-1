@@ -5,7 +5,7 @@ using UnityEngine;
 public class GridMover : MonoBehaviour
 {
     [SerializeField] private float moveDuration = 0.2f;
-    [SerializeField] private CellType occupantType = CellType.Player;
+    [SerializeField] private CellType occupantType;
 
     private GridManager gridManager;
     private Coroutine moveCoroutine;

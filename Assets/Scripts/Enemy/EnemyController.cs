@@ -6,44 +6,67 @@ public class EnemyController : MonoBehaviour
     public NavMeshAgent agent;
     public Transform player;
 
-    public LayerMask whatIsGround, whatIsPlayer, whatIsObstacle;
+    [Header("Patrolling / Waypoints")]
+    [SerializeField] private EnemyPath path;
+    [SerializeField] private float waitTimeOnWaypoint = 0.5f;
+    private float waypointWaitTimer = 0f;
 
-    // Patrolling
-    public Vector3 walkPoint;
-    bool walkPointSet;
-    public float walkPointRange;
-
-    // Attacking
+    [Header("Detection & Combat")]
     public float timeBetweenAttacks;
-    bool alreadyAttacked;
+    private bool alreadyAttacked;
 
-    // States
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
 
+    [Header("Layer Masks")]
+    public LayerMask whatIsGround, whatIsPlayer, whatIsObstacle;
+
+    private Animator animator;
+
     private void Awake()
     {
-        player = GameObject.Find("Player").transform;
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
+
+        if (player == null)
+        {
+            GameObject playerObj = GameObject.Find("PlayerRoot");
+            if (playerObj != null) player = playerObj.transform;
+        }
+    }
+
+    private void Start()
+    {
+        // Initialize path destination if a path is assigned
+        if (path != null)
+        {
+            agent.SetDestination(path.GetCurrentWayPoint());
+        }
     }
 
     private void Update()
     {
+        // Safety check to ensure agent is placed on a NavMesh
+        if (!agent.isActiveAndEnabled || !agent.isOnNavMesh) return;
+
         // Check if player is within sphere range
         bool playerInSightSphere = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         bool playerInAttackSphere = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
-        // Verify line of sight
+        // Verify line of sight (no obstacles in between)
         playerInSightRange = playerInSightSphere && HasLineOfSight();
         playerInAttackRange = playerInAttackSphere && HasLineOfSight();
 
+        // State Machine
         if (!playerInSightRange && !playerInAttackRange) Patroling();
-        if (playerInSightRange && !playerInAttackRange) ChasePlayer();
-        if (playerInSightRange && playerInAttackRange) AttackPlayer();
+        else if (playerInSightRange && !playerInAttackRange) ChasePlayer();
+        else if (playerInSightRange && playerInAttackRange) AttackPlayer();
     }
 
     private bool HasLineOfSight()
     {
+        if (player == null) return false;
+
         Vector3 eyeLevel = transform.position + Vector3.up * 1.5f;
         Vector3 directionToPlayer = (player.position - eyeLevel).normalized;
         float distanceToPlayer = Vector3.Distance(eyeLevel, player.position);
@@ -53,39 +76,21 @@ public class EnemyController : MonoBehaviour
 
     private void Patroling()
     {
-        // Ensure agent is active and unpaused when entering patrol state
         if (agent.isStopped) 
             agent.isStopped = false;
 
-        if (!walkPointSet) SearchWalkPoint();
+        if (path == null) return;
 
-        if (walkPointSet)
-            agent.SetDestination(walkPoint);
-
-        // Calculate distance ignoring vertical Y differences (so height mismatches don't break patrol)
-        Vector3 distanceToWalkPoint = transform.position - walkPoint;
-        distanceToWalkPoint.y = 0;
-
-        // Walkpoint reached or path blocked/stuck
-        if (distanceToWalkPoint.magnitude < 1.5f || agent.pathStatus == NavMeshPathStatus.PathInvalid)
+        // Check if the agent has reached the waypoint
+        if (!agent.pathPending && agent.remainingDistance <= 0.2f)
         {
-            walkPointSet = false;
-        }
-    }
+            waypointWaitTimer += Time.deltaTime;
 
-    private void SearchWalkPoint()
-    {
-        float randomZ = Random.Range(-walkPointRange, walkPointRange);
-        float randomX = Random.Range(-walkPointRange, walkPointRange);
-
-        Vector3 randomPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
-
-        NavMeshHit hit;
-        // Search in a slightly wider radius (e.g. walkPointRange) on the NavMesh
-        if (NavMesh.SamplePosition(randomPoint, out hit, walkPointRange, NavMesh.AllAreas))
-        {
-            walkPoint = hit.position;
-            walkPointSet = true;
+            if (waypointWaitTimer >= waitTimeOnWaypoint)
+            {
+                waypointWaitTimer = 0f;
+                agent.SetDestination(path.GetNextWaypoint());
+            }
         }
     }
 
@@ -94,15 +99,12 @@ public class EnemyController : MonoBehaviour
         if (agent.isStopped) 
             agent.isStopped = false;
 
+        waypointWaitTimer = 0f; // Reset waypoint wait timer while chasing
         agent.SetDestination(player.position);
-        
-        // Reset walkPointSet so when the enemy loses sight, it immediately picks a NEW patrol point
-        walkPointSet = false; 
     }
 
     private void AttackPlayer()
     {
-        // Stop movement during attack
         agent.isStopped = true;
 
         Vector3 targetPosition = new Vector3(player.position.x, transform.position.y, player.position.z);
@@ -110,14 +112,11 @@ public class EnemyController : MonoBehaviour
 
         if (!alreadyAttacked)
         {
-            /// Attack code here
+            /// Attack code / Animation trigger here
 
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
-
-        // Reset walkPointSet so patrol generates a fresh point when player runs away
-        walkPointSet = false; 
     }
 
     private void ResetAttack()

@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 4301397659861761439}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.0799, y: 1, z: -8.97}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -186,6 +186,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7339487944288911898}
   - component: {fileID: 5880787659812281341}
+  - component: {fileID: 8586879460602564537}
+  - component: {fileID: 4339935227109452338}
   m_Layer: 0
   m_Name: PlayerRoot
   m_TagString: Untagged
@@ -223,6 +225,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   inputEnabled: 1
   debugInput: 1
+--- !u!114 &8586879460602564537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5779588681206374241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdceef5ee09b6d941b4778861ee92f89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GridMover
+  moveDuration: 0.2
+  occupantType: 3
+--- !u!114 &4339935227109452338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5779588681206374241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a973697805ca8834e87dc5098edc69c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerGridAdapter
+  gridManager: {fileID: 0}
 --- !u!1 &6105698974375381752
 GameObject:
   m_ObjectHideFlags: 0

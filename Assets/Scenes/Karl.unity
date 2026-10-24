@@ -285,6 +285,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GridManager
   gridSize: {x: 4, y: 4}
   unitGridSize: 1
+  gridOrigin: {x: 0, y: 0.5, z: 0}
 --- !u!1 &704342140
 GameObject:
   m_ObjectHideFlags: 0
@@ -600,13 +601,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4339935227109452338, guid: 4d3830c3f3910b046a49b7a7d9cb9cce, type: 3}
+      propertyPath: gridManager
+      value: 
+      objectReference: {fileID: 645060493}
     - target: {fileID: 5779588681206374241, guid: 4d3830c3f3910b046a49b7a7d9cb9cce, type: 3}
       propertyPath: m_Name
       value: PlayerRoot
       objectReference: {fileID: 0}
     - target: {fileID: 7339487944288911898, guid: 4d3830c3f3910b046a49b7a7d9cb9cce, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7339487944288911898, guid: 4d3830c3f3910b046a49b7a7d9cb9cce, type: 3}
       propertyPath: m_LocalPosition.y
@@ -614,7 +619,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7339487944288911898, guid: 4d3830c3f3910b046a49b7a7d9cb9cce, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 9
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7339487944288911898, guid: 4d3830c3f3910b046a49b7a7d9cb9cce, type: 3}
       propertyPath: m_LocalRotation.w

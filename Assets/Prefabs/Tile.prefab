@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4428206354857216382}
   - component: {fileID: 6371566853682268327}
   - component: {fileID: 4376169540248393298}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,7 +121,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4360929011356353683}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile
   m_TagString: Tile
   m_Icon: {fileID: 0}

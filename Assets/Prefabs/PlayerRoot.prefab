@@ -203,6 +203,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   inputEnabled: 1
+  viewTransform: {fileID: 5169370380818627476}
   debugInput: 1
 --- !u!114 &8586879460602564537
 MonoBehaviour:

@@ -7,6 +7,9 @@ public class PlayerController : MonoBehaviour
     [Header("Input Settings")]
     [SerializeField] private bool inputEnabled = true;
 
+    [Header("View Settings")]
+    [SerializeField] private Transform viewTransform;
+
     [Tooltip("Print movement requests to the Console while testing.")]
     [SerializeField] private bool debugInput = true;
 
@@ -46,35 +49,75 @@ public class PlayerController : MonoBehaviour
 
     private Vector2Int ReadMovementInput(Keyboard keyboard)
     {
+        Vector2Int relativeInput = Vector2Int.zero;
+
         // North: positive world Z.
         if (keyboard.wKey.wasPressedThisFrame ||
             keyboard.upArrowKey.wasPressedThisFrame)
         {
-            return new Vector2Int(0, 1);
+            relativeInput = Vector2Int.up;
         }
 
         // South: negative world Z.
         if (keyboard.sKey.wasPressedThisFrame ||
             keyboard.downArrowKey.wasPressedThisFrame)
         {
-            return new Vector2Int(0, -1);
+            relativeInput = Vector2Int.down;
         }
 
         // West: negative world X.
         if (keyboard.aKey.wasPressedThisFrame ||
             keyboard.leftArrowKey.wasPressedThisFrame)
         {
-            return new Vector2Int(-1, 0);
+            relativeInput = Vector2Int.left;
         }
 
         // East: positive world X.
         if (keyboard.dKey.wasPressedThisFrame ||
             keyboard.rightArrowKey.wasPressedThisFrame)
         {
-            return new Vector2Int(1, 0);
+            relativeInput = Vector2Int.right;
         }
 
-        return Vector2Int.zero;
+        if (relativeInput == Vector2Int.zero)
+            return Vector2Int.zero;
+
+        return TransformToGridDirection(relativeInput);
+    }
+
+    private Vector2Int TransformToGridDirection(Vector2Int localDir)
+    {
+        // Use assigned view transform, or fallback to main camera / local transform
+        Transform referenceTransform = viewTransform != null ? viewTransform : (Camera.main != null ? Camera.main.transform : transform);
+
+        // Get camera/view forward vector projected onto the horizontal grid plane
+        Vector3 forward = referenceTransform.forward;
+        forward.y = 0f;
+
+        // Safety check in case looking straight up or down
+        if (forward.sqrMagnitude < 0.01f)
+        {
+            forward = referenceTransform.up;
+            forward.y = 0f;
+        }
+        forward.Normalize();
+
+        // Round facing direction to the nearest cardinal unit vector
+        Vector2Int gridForward;
+        if (Mathf.Abs(forward.x) > Mathf.Abs(forward.z))
+        {
+            gridForward = new Vector2Int(forward.x > 0 ? 1 : -1, 0);
+        }
+        else
+        {
+            gridForward = new Vector2Int(0, forward.z > 0 ? 1 : -1);
+        }
+
+        // Calculate perpendicular grid right vector (Clockwise 90-degree rotation)
+        Vector2Int gridRight = new Vector2Int(gridForward.y, -gridForward.x);
+
+        // Map local input (Forward/Backward/Left/Right) onto grid vectors
+        return (gridForward * localDir.y) + (gridRight * localDir.x);
     }
 
     /// <summary>

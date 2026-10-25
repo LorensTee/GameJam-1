@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   agent: {fileID: 7574955592677664577}
-  player: {fileID: 0}
+  player: {fileID: 3105748184753758416}
   path: {fileID: 0}
   waitTimeOnWaypoint: 0.5
   respawnPoint: {x: -5, y: 1.1, z: 3}

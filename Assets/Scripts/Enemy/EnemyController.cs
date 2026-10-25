@@ -119,8 +119,6 @@ public class EnemyController : MonoBehaviour
 
         if (!alreadyAttacked)
         {
-            /// Attack code / Animation trigger here
-
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
@@ -133,18 +131,25 @@ public class EnemyController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (isRespawning) return; // Ignore collisions while already respawning
+        if (isRespawning) return;
 
-        bool isPlayer = other.CompareTag("Player") || 
-                    (other.transform.parent != null && other.transform.parent.CompareTag("Player"));
+        bool isPlayer = other.CompareTag("Player") ||
+            (other.transform.parent != null &&
+            other.transform.parent.CompareTag("Player"));
 
-        if (isPlayer)
+        if (!isPlayer) return;
+
+        Debug.Log("Enemy caught the player!");
+
+        PlayerHealth playerHealth =
+            GameObject.Find("PlayerRoot").GetComponent<PlayerHealth>();
+
+        if (playerHealth != null)
         {
-            print("Enemy caught the player!");
-            // lessen health by 1 here
-
-            StartCoroutine(RespawnSequence());
+            playerHealth.Decrement();
         }
+
+        StartCoroutine(RespawnSequence());
     }
 
     private IEnumerator RespawnSequence()

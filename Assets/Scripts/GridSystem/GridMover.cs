@@ -78,4 +78,28 @@ public class GridMover : MonoBehaviour
         TargetCell = cell;
         transform.position = gridManager.CellToWorld(cell, transform.position.y);
     }
+
+    public void RespawnAt(Vector3 worldPosition)
+    {
+        if (moveCoroutine != null)
+        {
+            StopCoroutine(moveCoroutine);
+            moveCoroutine = null;
+        }
+
+        IsMoving = false;
+
+        Vector2Int oldCell = CurrentCell;
+        Vector2Int newCell = gridManager.WorldToCell(worldPosition);
+
+        gridManager.CompleteMove(oldCell, newCell, this, occupantType);
+
+        CurrentCell = newCell;
+        TargetCell = newCell;
+
+        transform.position = gridManager.CellToWorld(
+            newCell,
+            transform.position.y
+        );
+    }
 }

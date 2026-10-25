@@ -38,11 +38,6 @@ public class FlashlightController : MonoBehaviour
 
         if (flashlight == null)
         {
-            Debug.LogError(
-                "FlashlightController requires a Light component.",
-                this
-            );
-
             enabled = false;
             return;
         }
@@ -70,7 +65,7 @@ public class FlashlightController : MonoBehaviour
             {
                 if (IsEnemyInsideBeam(enemy.transform))
                 {
-                    Debug.Log("Trying to freeze Enemy");
+                    // Debug.Log("Trying to freeze Enemy");
                     EnemyController controller =
                         enemy.GetComponent<EnemyController>();
 

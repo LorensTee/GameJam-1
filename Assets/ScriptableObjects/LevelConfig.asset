@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b844ec3fa8d9c7d89c1a7f7c1c36560, type: 3}
+  m_Name: LevelConfig
+  m_EditorClassIdentifier: Assembly-CSharp::LevelConfigSO
+  gridDimensionsXZ:
+    X: 21
+    Z: 21
+  cellSize: 1
+  gridOrigin: {x: 0, y: 0, z: 0}
+  playerSpawnCellXZ:
+    X: 10
+    Z: -12
+  keyholeCellXZ:
+    X: -10
+    Z: 8
+  northEastExitCellXZ:
+    X: 11
+    Z: 8
+  southWestExitCellXZ:
+    X: -10
+    Z: -13
+  enemySpawnCellsXZ:
+  - X: 5
+    Z: -7
+  - X: -5
+    Z: -7
+  - X: -5
+    Z: 3
+  - X: 5
+    Z: 3
+  eligibleKeyCrateStartCellsXZ:
+  - X: 9
+    Z: 4
+  - X: 2
+    Z: 1
+  - X: -9
+    Z: -10
+  - X: 9
+    Z: 6
+  - X: -6
+    Z: -7
+  - X: 7
+    Z: 1
+  - X: -2
+    Z: -7
+  - X: 0
+    Z: -1
+  - X: 7
+    Z: 5
+  - X: -3
+    Z: -5
+  - X: 4
+    Z: -2
+  - X: 4
+    Z: 4
+  - X: -6
+    Z: -11
+  - X: -1
+    Z: -4
+  gridSize: {x: 30, y: 30}
+  playerSpawnCell: {x: 10, y: -12}
+  keyholeCell: {x: -10, y: 8}
+  northEastExitCell: {x: 11, y: 8}
+  southWestExitCell: {x: -10, y: 0}
+  enemySpawnCells:
+  - {x: 5, y: -7}
+  - {x: -5, y: -7}
+  - {x: -5, y: 3}
+  - {x: 5, y: 3}
+  eligibleKeyCrateStartCells:
+  - {x: 9, y: 4}
+  - {x: 2, y: 1}
+  - {x: -9, y: -10}
+  - {x: 9, y: 6}
+  - {x: -6, y: -7}
+  - {x: 7, y: 1}
+  - {x: -2, y: -7}
+  - {x: 0, y: -1}
+  - {x: 7, y: 5}
+  - {x: -3, y: -5}
+  - {x: 4, y: -2}
+  - {x: 4, y: 4}
+  - {x: -6, y: -11}
+  - {x: -1, y: -4}
+  coordinateSchemaVersion: 1

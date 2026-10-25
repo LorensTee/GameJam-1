@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,11 +10,13 @@ public class EnemyController : MonoBehaviour
     [Header("Patrolling / Waypoints")]
     [SerializeField] private EnemyPath path;
     [SerializeField] private float waitTimeOnWaypoint = 0.5f;
+    [SerializeField] private Vector3 respawnPoint;
     private float waypointWaitTimer = 0f;
 
     [Header("Detection & Combat")]
     public float timeBetweenAttacks;
     private bool alreadyAttacked;
+    private bool isRespawning; // Prevents multiple trigger calls during the pause
 
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
@@ -46,6 +49,9 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
+        // Ignore update logic while paused/respawning
+        if (isRespawning) return;
+
         // Safety check to ensure agent is placed on a NavMesh
         if (!agent.isActiveAndEnabled || !agent.isOnNavMesh) return;
 
@@ -122,6 +128,48 @@ public class EnemyController : MonoBehaviour
     private void ResetAttack()
     {
         alreadyAttacked = false;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (isRespawning) return; // Ignore collisions while already respawning
+
+        bool isPlayer = other.CompareTag("Player") || 
+                    (other.transform.parent != null && other.transform.parent.CompareTag("Player"));
+
+        if (isPlayer)
+        {
+            print("Enemy caught the player!");
+            // lessen health by 1 here
+
+            StartCoroutine(RespawnSequence());
+        }
+    }
+
+    private IEnumerator RespawnSequence()
+    {
+        isRespawning = true;
+        
+        // Stop movement and reset pathfinding
+        agent.isStopped = true;
+        agent.ResetPath();
+
+        // Teleport agent safely using Warp to keep it attached to the NavMesh
+        agent.Warp(respawnPoint);
+
+        // Pause for 1 second
+        yield return new WaitForSeconds(1f);
+
+        // Resume patrol pathing
+        if (path != null)
+        {
+            agent.SetDestination(path.GetCurrentWayPoint());
+        }
+
+        waypointWaitTimer = 0f;
+        alreadyAttacked = false;
+        agent.isStopped = false;
+        isRespawning = false;
     }
 
     private void OnDrawGizmosSelected()

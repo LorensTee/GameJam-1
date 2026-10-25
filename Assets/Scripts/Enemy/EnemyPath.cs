@@ -44,34 +44,34 @@ public class EnemyPath : MonoBehaviour
     }
 
     private void OnDrawGizmos()
-{
-    if (waypoints == null || waypoints.Length == 0) return;
-
-    // Draw red spheres at each waypoint position
-    Gizmos.color = Color.red;
-    foreach (Transform waypoint in waypoints)
     {
-        if (waypoint != null)
-            Gizmos.DrawSphere(waypoint.position, 0.3f);
-    }
+        if (waypoints == null || waypoints.Length == 0) return;
 
-    // Draw white lines connecting sequential waypoints
-    Gizmos.color = Color.white;
-    for (int i = 0; i < waypoints.Length - 1; i++)
-    {
-        if (waypoints[i] != null && waypoints[i + 1] != null)
+        // Draw red spheres at each waypoint position
+        Gizmos.color = Color.red;
+        foreach (Transform waypoint in waypoints)
         {
-            Gizmos.DrawLine(waypoints[i].position, waypoints[i + 1].position);
+            if (waypoint != null)
+                Gizmos.DrawSphere(waypoint.position, 0.3f);
+        }
+
+        // Draw white lines connecting sequential waypoints
+        Gizmos.color = Color.white;
+        for (int i = 0; i < waypoints.Length - 1; i++)
+        {
+            if (waypoints[i] != null && waypoints[i + 1] != null)
+            {
+                Gizmos.DrawLine(waypoints[i].position, waypoints[i + 1].position);
+            }
+        }
+
+        // Draw loop closing line if PathType is set to Loop
+        if (pathType == PathType.Loop && waypoints.Length > 1)
+        {
+            if (waypoints[waypoints.Length - 1] != null && waypoints[0] != null)
+            {
+                Gizmos.DrawLine(waypoints[waypoints.Length - 1].position, waypoints[0].position);
+            }
         }
     }
-
-    // Draw loop closing line if PathType is set to Loop
-    if (pathType == PathType.Loop && waypoints.Length > 1)
-    {
-        if (waypoints[waypoints.Length - 1] != null && waypoints[0] != null)
-        {
-            Gizmos.DrawLine(waypoints[waypoints.Length - 1].position, waypoints[0].position);
-        }
-    }
-}
 }

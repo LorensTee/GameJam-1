@@ -3449,7 +3449,7 @@ MonoBehaviour:
   - {fileID: 2015513656}
   - {fileID: 2024771723}
   - {fileID: 375956214}
-  pathType: 0
+  pathType: 2
 --- !u!1001 &194805782
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -39506,7 +39506,7 @@ MonoBehaviour:
   - {fileID: 1288455317}
   - {fileID: 1444248280}
   - {fileID: 2073163744}
-  pathType: 0
+  pathType: 2
 --- !u!4 &2029915611
 Transform:
   m_ObjectHideFlags: 0

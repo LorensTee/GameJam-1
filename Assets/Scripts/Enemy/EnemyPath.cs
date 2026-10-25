@@ -10,6 +10,15 @@ public class EnemyPath : MonoBehaviour
     private int direction = 1;
     private int index = 0;
 
+    private void Awake()
+    {
+        // Pick a random starting index on startup if pathType is set to Random
+        if (pathType == PathType.Random && waypoints != null && waypoints.Length > 0)
+        {
+            index = Random.Range(0, waypoints.Length);
+        }
+    }
+
     public Vector3 GetCurrentWayPoint()
     {
         if (waypoints == null || waypoints.Length == 0) return transform.position;

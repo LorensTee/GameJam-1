@@ -8,6 +8,7 @@ TagManager:
   - Unit
   - Wall
   - Crate
+  - Enemy
   layers:
   - Default
   - TransparentFX

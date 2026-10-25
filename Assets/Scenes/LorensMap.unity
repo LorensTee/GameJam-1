@@ -8915,7 +8915,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3447379125371265877, guid: 4d3830c3f3910b046a49b7a7d9cb9cce, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 709703231}
   m_SourcePrefab: {fileID: 100100000, guid: 4d3830c3f3910b046a49b7a7d9cb9cce, type: 3}
 --- !u!1001 &467484950
 PrefabInstance:
@@ -11225,6 +11228,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4360929011356353683, guid: f619c8e63083e1049966ab98ad6977e2, type: 3}
   m_PrefabInstance: {fileID: 555536766}
+  m_PrefabAsset: {fileID: 0}
+--- !u!108 &555843902 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 559569377318792232, guid: 4d3830c3f3910b046a49b7a7d9cb9cce, type: 3}
+  m_PrefabInstance: {fileID: 466198044}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &556654156
 PrefabInstance:
@@ -14264,6 +14272,36 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4360929011356353683, guid: f619c8e63083e1049966ab98ad6977e2, type: 3}
   m_PrefabInstance: {fileID: 708783309}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &709703229 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3447379125371265877, guid: 4d3830c3f3910b046a49b7a7d9cb9cce, type: 3}
+  m_PrefabInstance: {fileID: 466198044}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &709703230 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5169370380818627476, guid: 4d3830c3f3910b046a49b7a7d9cb9cce, type: 3}
+  m_PrefabInstance: {fileID: 466198044}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &709703231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 709703229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abaa5b39c1c817635846c2bef9fbb4c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FlashlightController
+  flashlight: {fileID: 555843902}
+  viewTransform: {fileID: 709703230}
+  occlusionMask:
+    serializedVersion: 2
+    m_Bits: 512
+  detectionRange: 4
+  beamAngle: 45
+  enemyDetectedEvent: {fileID: 0}
 --- !u!1001 &714207175
 PrefabInstance:
   m_ObjectHideFlags: 0

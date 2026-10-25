@@ -12,6 +12,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float waitTimeOnWaypoint = 0.5f;
     [SerializeField] private Vector3 respawnPoint;
     private float waypointWaitTimer = 0f;
+    private bool isFrozen;
 
     [Header("Detection & Combat")]
     public float timeBetweenAttacks;
@@ -50,7 +51,7 @@ public class EnemyController : MonoBehaviour
     private void Update()
     {
         // Ignore update logic while paused/respawning
-        if (isRespawning) return;
+        if (isRespawning || isFrozen) return;
 
         // Safety check to ensure agent is placed on a NavMesh
         if (!agent.isActiveAndEnabled || !agent.isOnNavMesh) return;
@@ -170,6 +171,21 @@ public class EnemyController : MonoBehaviour
         alreadyAttacked = false;
         agent.isStopped = false;
         isRespawning = false;
+    }
+
+    public void SetFrozen(bool frozen)
+    {
+        if (isFrozen == frozen)
+        {
+            return;
+        }
+
+        isFrozen = frozen;
+
+        if (agent != null && agent.isActiveAndEnabled && agent.isOnNavMesh)
+        {
+            agent.isStopped = frozen;
+        }
     }
 
     private void OnDrawGizmosSelected()

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,7 +7,6 @@ public class FlashlightController : MonoBehaviour
     [Header("References")]
     [SerializeField] private Light flashlight;
     [SerializeField] private Transform viewTransform;
-    [SerializeField] private Transform enemyTarget;
 
     [Tooltip("Include wall and crate layers only.")]
     [SerializeField] private LayerMask occlusionMask;
@@ -20,6 +20,9 @@ public class FlashlightController : MonoBehaviour
 
     [Header("Events")]
     [SerializeField] private GameEventChannelSO enemyDetectedEvent;
+
+    private GameObject[] enemies;
+    private HashSet<EnemyController> detectedEnemies = new();
 
     public bool IsEnemyIlluminated { get; private set; }
 
@@ -51,35 +54,48 @@ public class FlashlightController : MonoBehaviour
 
     private void Update()
     {
-        // Explicitly detect F using the new Input System.
         if (Keyboard.current != null &&
             Keyboard.current.fKey.wasPressedThisFrame)
         {
             flashlight.enabled = !flashlight.enabled;
-
-            Debug.Log(
-                "Flashlight toggled: " +
-                (flashlight.enabled ? "ON" : "OFF")
-            );
         }
 
-        IsEnemyIlluminated =
-            flashlight.enabled && IsEnemyInsideBeam();
+        HashSet<EnemyController> currentlyDetected = new();
 
-        if (IsEnemyIlluminated && !wasDetected)
+        if (flashlight.enabled)
         {
-            Debug.Log("TEST ENEMY DETECTED!", this);
-            enemyDetectedEvent?.RaiseEvent();
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+            foreach (GameObject enemy in enemies)
+            {
+                if (IsEnemyInsideBeam(enemy.transform))
+                {
+                    Debug.Log("Trying to freeze Enemy");
+                    EnemyController controller =
+                        enemy.GetComponent<EnemyController>();
+
+                    if (controller != null)
+                    {
+                        currentlyDetected.Add(controller);
+                        controller.SetFrozen(true);
+                    }
+                }
+            }
         }
 
-        wasDetected = IsEnemyIlluminated;
+        // Unfreeze enemies that are no longer illuminated.
+        foreach (EnemyController enemy in detectedEnemies)
+        {
+            if (!currentlyDetected.Contains(enemy))
+                enemy.SetFrozen(false);
+        }
+
+        detectedEnemies.Clear();
+        detectedEnemies.UnionWith(currentlyDetected);
     }
 
-    private bool IsEnemyInsideBeam()
+    private bool IsEnemyInsideBeam(Transform enemyTarget)
     {
-        if (enemyTarget == null || viewTransform == null)
-            return false;
-
         Vector3 toEnemy = enemyTarget.position - viewTransform.position;
         float distance = toEnemy.magnitude;
 
@@ -94,14 +110,11 @@ public class FlashlightController : MonoBehaviour
         if (angle > beamAngle * 0.5f)
             return false;
 
-        return HasLineOfSightToEnemy();
+        return HasLineOfSightToEnemy(enemyTarget);
     }
 
-    public bool HasLineOfSightToEnemy()
+    public bool HasLineOfSightToEnemy(Transform enemyTarget)
     {
-        if (enemyTarget == null || viewTransform == null)
-            return false;
-
         Vector3 toEnemy = enemyTarget.position - viewTransform.position;
         float distance = toEnemy.magnitude;
 
@@ -110,7 +123,7 @@ public class FlashlightController : MonoBehaviour
 
         return !Physics.Raycast(
             viewTransform.position,
-            toEnemy / distance,
+            toEnemy.normalized,
             distance,
             occlusionMask,
             QueryTriggerInteraction.Ignore

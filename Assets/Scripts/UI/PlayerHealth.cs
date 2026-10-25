@@ -6,16 +6,16 @@ public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] Slider healthBarSlider;
     
-    [SerializeField] Player player;
+    // [SerializeField] Player player;
 
     void Start()
     {
-        healthBarSlider.maxValue = player.base_hp;
+        // healthBarSlider.maxValue = player.base_hp;
     }
 
     // Update is called once per frame
     void Update()
     {
-        healthBarSlider.value = player.hp;
+        // healthBarSlider.value = player.hp;
     }
 }

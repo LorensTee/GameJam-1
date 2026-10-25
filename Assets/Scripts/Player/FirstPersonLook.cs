@@ -5,7 +5,7 @@ public class FirstPersonLook : MonoBehaviour
 {
     [Header("Look Settings")]
     [SerializeField, Min(0.1f)]
-    private float sensitivity = 2f;
+    private float sensitivity = 15f;
 
     [SerializeField]
     private float minPitch = -75f;
@@ -60,12 +60,15 @@ public class FirstPersonLook : MonoBehaviour
 
         Vector2 mouseDelta = mouse.delta.ReadValue();
 
-        yaw += mouseDelta.x * sensitivity;
-        pitch -= mouseDelta.y * sensitivity;
+        // Scale by Time.deltaTime to decouple mouse look speed from frame rate fluctuations
+        float deltaFactor = Time.deltaTime * sensitivity;
+
+        yaw += mouseDelta.x * deltaFactor;
+        pitch -= mouseDelta.y * deltaFactor;
 
         pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
 
-        // Rotate the camera only, not the player root.
+        // Apply rotation
         transform.localRotation = Quaternion.Euler(pitch, yaw, 0f);
     }
 

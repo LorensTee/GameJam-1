@@ -8365,7 +8365,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8586879460602564537, guid: 4d3830c3f3910b046a49b7a7d9cb9cce, type: 3}
   m_PrefabInstance: {fileID: 466198044}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 383710173}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fdceef5ee09b6d941b4778861ee92f89, type: 3}
@@ -8383,9 +8383,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3ec9b09076811642948122686f4b919, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
-  base_hp: 4
-  hp: 0
+  maxLives: 3
   healthBarSlider: {fileID: 2014802445}
+  respawnPoint: {fileID: 4360929012394995122}
+  respawnDelay: 1
+  gridMover: {fileID: 429583415}
+  respawnCell: {x: 0, y: 0}
 --- !u!1001 &435263092
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23129,7 +23132,6 @@ MonoBehaviour:
   gridManager: {fileID: 595861377}
   playerGridMover: {fileID: 429583415}
   blockingColliders: []
-  closedDoorRenderers: []
   navMeshObstacles: []
 --- !u!1 &1097227336
 GameObject:
@@ -25287,7 +25289,6 @@ MonoBehaviour:
   gridManager: {fileID: 595861377}
   playerGridMover: {fileID: 429583415}
   blockingColliders: []
-  closedDoorRenderers: []
   navMeshObstacles: []
 --- !u!1001 &1213023816
 PrefabInstance:
@@ -40745,9 +40746,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3ec9b09076811642948122686f4b919, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
-  base_hp: 0
-  hp: 0
+  maxLives: 3
   healthBarSlider: {fileID: 0}
+  respawnPoint: {fileID: 0}
+  respawnDelay: 1
+  gridMover: {fileID: 0}
+  respawnCell: {x: 0, y: 0}
 --- !u!1 &2015513655
 GameObject:
   m_ObjectHideFlags: 0

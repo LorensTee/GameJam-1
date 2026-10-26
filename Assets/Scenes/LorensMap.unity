@@ -12765,10 +12765,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2143553787}
     m_Modifications:
-    - target: {fileID: 248720176814814156, guid: e9c85e7d9dcd24c7d840a7bc61c5983c, type: 3}
-      propertyPath: hudController
-      value: 
-      objectReference: {fileID: 1257199805}
     - target: {fileID: 3190748398493950330, guid: e9c85e7d9dcd24c7d840a7bc61c5983c, type: 3}
       propertyPath: m_Name
       value: Trigger (1)
@@ -80173,10 +80169,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2143553787}
     m_Modifications:
-    - target: {fileID: 248720176814814156, guid: e9c85e7d9dcd24c7d840a7bc61c5983c, type: 3}
-      propertyPath: hudController
-      value: 
-      objectReference: {fileID: 1257199805}
     - target: {fileID: 3190748398493950330, guid: e9c85e7d9dcd24c7d840a7bc61c5983c, type: 3}
       propertyPath: m_Name
       value: Trigger

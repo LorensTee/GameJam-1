@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5715588848167031807}
   - component: {fileID: 8357861571166913253}
   - component: {fileID: 7932159611878307573}
-  - component: {fileID: 248720176814814156}
   m_Layer: 0
   m_Name: Trigger
   m_TagString: Untagged
@@ -82,15 +81,3 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &248720176814814156
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3190748398493950330}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e730de9fc73004c94a282802b1ae8d7d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::VictoryController

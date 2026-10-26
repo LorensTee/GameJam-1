@@ -6,6 +6,7 @@ public class HUDController : MonoBehaviour
     [Header("UI Panels")]
     [SerializeField] private GameObject respawnUIPanel;
     [SerializeField] private Slider healthBarSlider;
+    [SerializeField] private JumpscareController jumpscareController;
     
     private void Start()
     {
@@ -50,5 +51,13 @@ public class HUDController : MonoBehaviour
         Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+    public void TriggerJumpscareUI()
+    {
+        if (jumpscareController != null)
+        {
+            jumpscareController.TriggerJumpscare();
+        }
     }
 }

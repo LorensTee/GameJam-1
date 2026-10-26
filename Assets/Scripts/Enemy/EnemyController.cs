@@ -134,6 +134,12 @@ public class EnemyController : MonoBehaviour
 
         print("Enemy caught the player!");
 
+        HUDController hud = FindAnyObjectByType<HUDController>();
+        if (hud != null)
+        {
+            hud.TriggerJumpscareUI();
+        }
+
         PlayerHealth playerHealth = GameObject.Find("PlayerRoot").GetComponent<PlayerHealth>();
 
         if (playerHealth != null)

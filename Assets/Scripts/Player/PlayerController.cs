@@ -51,28 +51,28 @@ public class PlayerController : MonoBehaviour
     {
         Vector2Int relativeInput = Vector2Int.zero;
 
-        // North: positive world Z.
+        // North
         if (keyboard.wKey.wasPressedThisFrame ||
             keyboard.upArrowKey.wasPressedThisFrame)
         {
             relativeInput = Vector2Int.up;
         }
 
-        // South: negative world Z.
+        // South
         if (keyboard.sKey.wasPressedThisFrame ||
             keyboard.downArrowKey.wasPressedThisFrame)
         {
             relativeInput = Vector2Int.down;
         }
 
-        // West: negative world X.
+        // West
         if (keyboard.aKey.wasPressedThisFrame ||
             keyboard.leftArrowKey.wasPressedThisFrame)
         {
             relativeInput = Vector2Int.left;
         }
 
-        // East: positive world X.
+        // East
         if (keyboard.dKey.wasPressedThisFrame ||
             keyboard.rightArrowKey.wasPressedThisFrame)
         {
@@ -87,14 +87,12 @@ public class PlayerController : MonoBehaviour
 
     private Vector2Int TransformToGridDirection(Vector2Int localDir)
     {
-        // Use assigned view transform, or fallback to main camera / local transform
+        // use assigned view transform, or fallback to main camera / local transform
         Transform referenceTransform = viewTransform != null ? viewTransform : (Camera.main != null ? Camera.main.transform : transform);
 
-        // Get camera/view forward vector projected onto the horizontal grid plane
         Vector3 forward = referenceTransform.forward;
         forward.y = 0f;
 
-        // Safety check in case looking straight up or down
         if (forward.sqrMagnitude < 0.01f)
         {
             forward = referenceTransform.up;
@@ -102,7 +100,6 @@ public class PlayerController : MonoBehaviour
         }
         forward.Normalize();
 
-        // Round facing direction to the nearest cardinal unit vector
         Vector2Int gridForward;
         if (Mathf.Abs(forward.x) > Mathf.Abs(forward.z))
         {
@@ -113,17 +110,12 @@ public class PlayerController : MonoBehaviour
             gridForward = new Vector2Int(0, forward.z > 0 ? 1 : -1);
         }
 
-        // Calculate perpendicular grid right vector (Clockwise 90-degree rotation)
         Vector2Int gridRight = new Vector2Int(gridForward.y, -gridForward.x);
 
         // Map local input (Forward/Backward/Left/Right) onto grid vectors
         return (gridForward * localDir.y) + (gridRight * localDir.x);
     }
 
-    /// <summary>
-    /// Lets the grid system retrieve one pending movement request.
-    /// Returns false when there is no request waiting.
-    /// </summary>
     public bool TryConsumeMoveRequest(out Vector2Int direction)
     {
         if (!hasPendingMove)

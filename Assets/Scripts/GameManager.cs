@@ -116,7 +116,7 @@ public class GameManager : MonoBehaviour
         }
 
         // 2. Freeze all enemies and disable their controllers
-        EnemyController[] enemies = FindObjectsByType<EnemyController>(FindObjectsSortMode.None);
+        EnemyController[] enemies = FindObjectsByType<EnemyController>();
         foreach (EnemyController enemy in enemies)
         {
             if (enemy != null)

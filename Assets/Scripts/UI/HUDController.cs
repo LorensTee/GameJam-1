@@ -7,11 +7,15 @@ public class HUDController : MonoBehaviour
     [SerializeField] private GameObject respawnUIPanel;
     [SerializeField] private Slider healthBarSlider;
     [SerializeField] private JumpscareController jumpscareController;
+    [SerializeField] private GameObject victoryUIPanel;
     
     private void Start()
     {
         if (respawnUIPanel != null)
             respawnUIPanel.SetActive(false);
+
+        if (victoryUIPanel != null)
+            victoryUIPanel.SetActive(false);
     }
 
     // Health bar
@@ -58,6 +62,18 @@ public class HUDController : MonoBehaviour
         if (jumpscareController != null)
         {
             jumpscareController.TriggerJumpscare();
+        }
+    }
+
+    public void ShowVictoryUI()
+    {
+        Time.timeScale = 0f;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        if (victoryUIPanel != null)
+        {
+            victoryUIPanel.SetActive(true);
         }
     }
 }

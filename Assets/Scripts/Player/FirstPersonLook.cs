@@ -33,6 +33,15 @@ public class FirstPersonLook : MonoBehaviour
 
     private void Update()
     {
+        if (Time.timeScale == 0f)
+        {
+            if (Cursor.lockState != CursorLockMode.None)
+            {
+                UnlockCursor();
+            }
+            return;
+        }
+
         Keyboard keyboard = Keyboard.current;
         Mouse mouse = Mouse.current;
 
@@ -42,7 +51,6 @@ public class FirstPersonLook : MonoBehaviour
             return;
         }
 
-        // Allow the player to click back into the game.
         if (Cursor.lockState != CursorLockMode.Locked)
         {
             if (mouse != null && mouse.leftButton.wasPressedThisFrame)
@@ -72,13 +80,13 @@ public class FirstPersonLook : MonoBehaviour
         transform.localRotation = Quaternion.Euler(pitch, yaw, 0f);
     }
 
-    private void LockCursor()
+    public void LockCursor()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 
-    private void UnlockCursor()
+    public void UnlockCursor()
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;

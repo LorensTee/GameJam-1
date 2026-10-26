@@ -10,8 +10,12 @@ public class PlayerHealth : MonoBehaviour
 
     [Header("Respawn")]
     [SerializeField] private Transform respawnPoint;
-    [SerializeField] private float respawnDelay = 1f;
+    [SerializeField] private float respawnDelay = 0.5f;
 
+    [Header("UI References")]
+    [SerializeField] private GameObject respawnUIPanel; // Drag your UI Canvas/Panel here
+
+    [Header("Grid Movement")]
     [SerializeField] private GridMover gridMover;
     [SerializeField] private Vector2Int respawnCell;
 
@@ -23,7 +27,9 @@ public class PlayerHealth : MonoBehaviour
     {
         lives = maxLives;
         characterController = GetComponent<CharacterController>();
-        gridMover = GetComponent<GridMover>();
+        
+        if (gridMover == null)
+            gridMover = GetComponent<GridMover>();
     }
 
     private void Start()
@@ -33,6 +39,9 @@ public class PlayerHealth : MonoBehaviour
             healthBarSlider.maxValue = maxLives;
             healthBarSlider.value = lives;
         }
+
+        if (respawnUIPanel != null)
+            respawnUIPanel.SetActive(false);
     }
 
     public void Decrement()
@@ -47,36 +56,60 @@ public class PlayerHealth : MonoBehaviour
 
         if (lives <= 0)
         {
-            print("Game Over! No lives remaining.");
-            StartCoroutine(RespawnSequence());
-            return;
+            ShowRespawnUI();
         }
+    }
+
+    private void ShowRespawnUI()
+    {
+        isRespawning = true;
+        
+        Time.timeScale = 0f;
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        if (respawnUIPanel != null)
+            respawnUIPanel.SetActive(true);
+    }
+
+    public void OnRespawnButtonPressed()
+    {
+        if (respawnUIPanel != null)
+            respawnUIPanel.SetActive(false);
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        Time.timeScale = 1f;
+
+        StartCoroutine(RespawnSequence());
     }
 
     private IEnumerator RespawnSequence()
     {
-        isRespawning = true;
 
         if (characterController != null)
             characterController.enabled = false;
 
-        if (gridMover != null)
+        if (gridMover != null && respawnPoint != null)
         {
             gridMover.RespawnAt(respawnPoint.position);
         }
         else if (respawnPoint != null)
         {
-            transform.SetPositionAndRotation(
-                respawnPoint.position,
-                respawnPoint.rotation
-            );
+            transform.SetPositionAndRotation(respawnPoint.position, respawnPoint.rotation);
         }
 
         if (characterController != null)
             characterController.enabled = true;
 
-        isRespawning = false;
+        lives = maxLives;
+        if (healthBarSlider != null)
+            healthBarSlider.value = lives;
 
-        yield break;
+        yield return new WaitForSecondsRealtime(respawnDelay);
+        
+        isRespawning = false;
     }
 }

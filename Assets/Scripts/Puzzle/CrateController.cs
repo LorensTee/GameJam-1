@@ -8,12 +8,14 @@ public class CrateController : MonoBehaviour
     [Header("Key Crate Visual")]
     [SerializeField] private Renderer[] visualRenderers;
     [SerializeField] private Color keyCrateColor = new Color(1f, 0.72f, 0.12f, 1f);
-
+    [SerializeField] private float bloomIntensity = 3.0f;
+    
     private GridMover gridMover;
     private GridManager gridManager;
     private Renderer[] cachedRenderers;
     private MaterialPropertyBlock[] originalPropertyBlocks;
     private MaterialPropertyBlock propertyBlock;
+    private Light crateLight;
 
     private Vector2Int keyholeCell;
     private Vector2Int lockedCell;
@@ -30,6 +32,7 @@ public class CrateController : MonoBehaviour
         gridMover = GetComponent<GridMover>();
         gridManager = FindAnyObjectByType<GridManager>();
         propertyBlock = new MaterialPropertyBlock();
+        crateLight = GetComponent<Light>();
         CacheVisuals();
     }
 
@@ -155,15 +158,27 @@ public class CrateController : MonoBehaviour
         if (cachedRenderers == null)
             CacheVisuals();
 
+        Color hdrColor = keyCrateColor * bloomIntensity;
+
         foreach (Renderer targetRenderer in cachedRenderers)
         {
             if (targetRenderer == null)
                 continue;
 
+            targetRenderer.material.EnableKeyword("_EMISSION");
+            targetRenderer.material.SetColor("_EmissionColor", hdrColor);
+
             targetRenderer.GetPropertyBlock(propertyBlock);
             propertyBlock.SetColor("_BaseColor", keyCrateColor);
             propertyBlock.SetColor("_Color", keyCrateColor);
             targetRenderer.SetPropertyBlock(propertyBlock);
+        }
+
+        if (crateLight != null)
+        {
+            crateLight.color = keyCrateColor;
+            crateLight.intensity = bloomIntensity;
+            crateLight.enabled = true;
         }
     }
 
@@ -175,7 +190,17 @@ public class CrateController : MonoBehaviour
         for (int i = 0; i < cachedRenderers.Length; i++)
         {
             if (cachedRenderers[i] != null)
+            {
+                cachedRenderers[i].material.DisableKeyword("_EMISSION");
+                cachedRenderers[i].material.SetColor("_EmissionColor", Color.black);
+            
                 cachedRenderers[i].SetPropertyBlock(originalPropertyBlocks[i]);
+            }
+
+            if (crateLight != null)
+            {
+                crateLight.enabled = false;
+            }
         }
     }
 }

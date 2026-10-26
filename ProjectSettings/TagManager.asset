@@ -15,14 +15,14 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Box
   - Water
   - UI
   - Occlusion
   - Floor
   - Player
   - Obstacle
-  - 
+  - PostProcessing
   - 
   - 
   - 

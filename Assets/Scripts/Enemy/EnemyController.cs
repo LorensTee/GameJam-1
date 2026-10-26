@@ -134,8 +134,7 @@ public class EnemyController : MonoBehaviour
 
         print("Enemy caught the player!");
 
-        PlayerHealth playerHealth =
-            GameObject.Find("PlayerRoot").GetComponent<PlayerHealth>();
+        PlayerHealth playerHealth = GameObject.Find("PlayerRoot").GetComponent<PlayerHealth>();
 
         if (playerHealth != null)
         {

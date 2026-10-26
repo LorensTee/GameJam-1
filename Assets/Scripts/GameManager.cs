@@ -100,13 +100,11 @@ public class GameManager : MonoBehaviour
     {
         currentState = outcome;
 
-        // 1. Disable player input
         if (playerController != null)
         {
             playerController.SetInputEnabled(false);
         }
 
-        // 2. Freeze all enemies and disable their controllers
         EnemyController[] enemies = FindObjectsByType<EnemyController>();
         foreach (EnemyController enemy in enemies)
         {
@@ -117,14 +115,11 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        // 3. Unlock and display mouse cursor
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        // 4. Pause the game
         Time.timeScale = 0f;
 
-        // 5. Trigger appropriate UI
         if (outcome == GameState.GameOver)
         {
             if (hudController != null)

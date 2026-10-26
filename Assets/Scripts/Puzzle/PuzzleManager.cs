@@ -18,6 +18,10 @@ public class PuzzleManager : MonoBehaviour
     [Header("Initialization")]
     [SerializeField, Min(1f)] private float initializationTimeoutSeconds = 10f;
 
+    [Header("Event Channels")]
+    [SerializeField] private GameEventChannelSO playerWonEvent;
+    [SerializeField] private GameEventChannelSO exitUnlockedEvent;
+
     private sealed class CrateStartData
     {
         public GridMover Mover;
@@ -529,6 +533,7 @@ public class PuzzleManager : MonoBehaviour
             return;
 
         activeExit.SetUnlocked(true);
+        exitUnlockedEvent?.RaiseEvent();
         Debug.Log($"Key crate locked in the keyhole. Exit '{activeExit.name}' is unlocked.", this);
     }
 
@@ -538,5 +543,6 @@ public class PuzzleManager : MonoBehaviour
             return;
 
         OnVictoryReached?.Invoke(door);
+        playerWonEvent?.RaiseEvent();
     }
 }

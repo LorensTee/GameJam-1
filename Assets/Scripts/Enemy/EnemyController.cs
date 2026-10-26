@@ -25,7 +25,12 @@ public class EnemyController : MonoBehaviour
     [Header("Layer Masks")]
     public LayerMask whatIsGround, whatIsPlayer, whatIsObstacle;
 
+    [Header("Event Channels")]
+    [SerializeField] private GameEventChannelSO enemyDetectedEvent;
+    [SerializeField] private GameEventChannelSO enemyTouchedPlayerEvent;
+
     private Animator animator;
+    private bool wasPlayerDetected;
 
     private void Awake()
     {
@@ -58,6 +63,13 @@ public class EnemyController : MonoBehaviour
 
         playerInSightRange = playerInSightSphere && HasLineOfSight();
         playerInAttackRange = playerInAttackSphere && HasLineOfSight();
+
+        bool isDetected = playerInSightRange || playerInAttackRange;
+        if (isDetected && !wasPlayerDetected)
+        {
+            enemyDetectedEvent?.RaiseEvent();
+        }
+        wasPlayerDetected = isDetected;
 
         if (!playerInSightRange && !playerInAttackRange) Patroling();
         else if (playerInSightRange && !playerInAttackRange) ChasePlayer();
@@ -133,6 +145,7 @@ public class EnemyController : MonoBehaviour
         if (!isPlayer) return;
 
         print("Enemy caught the player!");
+        enemyTouchedPlayerEvent?.RaiseEvent();
 
         HUDController hud = FindAnyObjectByType<HUDController>();
         if (hud != null)

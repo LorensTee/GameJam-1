@@ -10,6 +10,13 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private Transform respawnPoint;
     [SerializeField] private float respawnDelay = 0.5f;
 
+    [Header("Event Channels")]
+    [SerializeField] private GameEventChannelSO playerDiedEvent;
+    [SerializeField] private GameEventChannelSO healthChangedEvent;
+
+    [Header("Game Manager")]
+    [SerializeField] private GameManager gameManager;
+
     [Header("Dependencies")]
     [SerializeField] private HUDController hudController;
     [SerializeField] private GridMover gridMover;
@@ -25,6 +32,9 @@ public class PlayerHealth : MonoBehaviour
         
         if (gridMover == null)
             gridMover = GetComponent<GridMover>();
+
+        if (gameManager == null)
+            gameManager = FindAnyObjectByType<GameManager>();
     }
 
     private void Start()
@@ -43,19 +53,35 @@ public class PlayerHealth : MonoBehaviour
         if (hudController != null)
             hudController.UpdateHealthUI(lives);
 
+        healthChangedEvent?.RaiseEvent();
+
         if (lives <= 0)
         {
-            if (hudController != null)
+            if (playerDiedEvent != null)
+            {
+                playerDiedEvent.RaiseEvent();
+            }
+            else if (hudController != null)
+            {
+                // Fallback if event channel is not assigned
                 hudController.ShowRespawnUI();
+            }
         }
     }
 
     public void OnRespawnButtonPressed()
     {
-        if (hudController != null)
-            hudController.HideRespawnUI();
+        if (gameManager != null)
+        {
+            gameManager.RestartLevel();
+        }
+        else
+        {
+            if (hudController != null)
+                hudController.HideRespawnUI();
 
-        StartCoroutine(RespawnSequence());
+            StartCoroutine(RespawnSequence());
+        }
     }
 
     private IEnumerator RespawnSequence()

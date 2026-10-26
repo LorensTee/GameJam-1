@@ -1964,6 +1964,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy2
       objectReference: {fileID: 0}
+    - target: {fileID: 7954718825819578617, guid: 8568ec99c6f9b41d08b5086f9a1f226a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -16135,8 +16139,22 @@ MonoBehaviour:
   maxLives: 3
   respawnPoint: {fileID: 4360929012394995122}
   respawnDelay: 1
+  playerDiedEvent: {fileID: 11400000, guid: 9e739ab835a14cdc9e682e9c41d3312c, type: 2}
+  healthChangedEvent: {fileID: 11400000, guid: fc3e2d3cca19429088bc1903ef84f543, type: 2}
+  gameManager: {fileID: 922190574}
   hudController: {fileID: 1257199805}
   gridMover: {fileID: 429583415}
+--- !u!114 &429583421 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5880787659812281341, guid: 4d3830c3f3910b046a49b7a7d9cb9cce, type: 3}
+  m_PrefabInstance: {fileID: 466198044}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 383710173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81d056654cc915635b96b59433735f45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
 --- !u!1001 &433544751
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26317,6 +26335,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 7954718825819578617, guid: 8568ec99c6f9b41d08b5086f9a1f226a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -35739,6 +35761,56 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9149509043512336631, guid: 8d3389c316e93074fbfa279acfed72d1, type: 3}
   m_PrefabInstance: {fileID: 921643315}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &922190572
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 922190573}
+  - component: {fileID: 922190574}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &922190573
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 922190572}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.5132, y: -0.28868, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &922190574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 922190572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fad7aa2e0c84b84b358af9a54ba8333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  currentState: 0
+  playerDiedEvent: {fileID: 11400000, guid: 9e739ab835a14cdc9e682e9c41d3312c, type: 2}
+  playerWonEvent: {fileID: 11400000, guid: a292fa0f226b44179137021c3d3ef436, type: 2}
+  levelRestartedEvent: {fileID: 11400000, guid: beb270e5cb8745ae98e5fab1022b8b6d, type: 2}
+  playerController: {fileID: 429583421}
+  hudController: {fileID: 1257199805}
 --- !u!1001 &922670247
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -57643,6 +57715,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy3
       objectReference: {fileID: 0}
+    - target: {fileID: 7954718825819578617, guid: 8568ec99c6f9b41d08b5086f9a1f226a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -60095,6 +60171,10 @@ PrefabInstance:
     - target: {fileID: 7954718825819578617, guid: 8568ec99c6f9b41d08b5086f9a1f226a, type: 3}
       propertyPath: m_Name
       value: Enemy4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7954718825819578617, guid: 8568ec99c6f9b41d08b5086f9a1f226a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -73571,6 +73651,9 @@ MonoBehaviour:
   maxLives: 3
   respawnPoint: {fileID: 4360929012394995122}
   respawnDelay: 1
+  playerDiedEvent: {fileID: 0}
+  healthChangedEvent: {fileID: 0}
+  gameManager: {fileID: 0}
   hudController: {fileID: 1257199805}
   gridMover: {fileID: 429583415}
 --- !u!1 &2015513655
@@ -73817,6 +73900,8 @@ MonoBehaviour:
   - {fileID: 1096771291}
   - {fileID: 1207592241}
   initializationTimeoutSeconds: 10
+  playerWonEvent: {fileID: 11400000, guid: a292fa0f226b44179137021c3d3ef436, type: 2}
+  exitUnlockedEvent: {fileID: 11400000, guid: 9b7fe132425c46f1860860af99acd716, type: 2}
 --- !u!1001 &2027296279
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -78904,6 +78989,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 877535802}
   - {fileID: 466198044}
+  - {fileID: 922190573}
   - {fileID: 595861376}
   - {fileID: 2025758419}
   - {fileID: 1336655587}

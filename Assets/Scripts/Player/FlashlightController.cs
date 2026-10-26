@@ -71,6 +71,11 @@ public class FlashlightController : MonoBehaviour
 
                     if (controller != null)
                     {
+                        if (!detectedEnemies.Contains(controller))
+                        {
+                            enemyDetectedEvent?.RaiseEvent();
+                        }
+
                         currentlyDetected.Add(controller);
                         controller.SetFrozen(true);
                     }

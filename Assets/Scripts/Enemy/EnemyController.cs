@@ -26,11 +26,9 @@ public class EnemyController : MonoBehaviour
     public LayerMask whatIsGround, whatIsPlayer, whatIsObstacle;
 
     [Header("Event Channels")]
-    [SerializeField] private GameEventChannelSO enemyDetectedEvent;
     [SerializeField] private GameEventChannelSO enemyTouchedPlayerEvent;
 
     private Animator animator;
-    private bool wasPlayerDetected;
 
     private void Awake()
     {
@@ -63,13 +61,6 @@ public class EnemyController : MonoBehaviour
 
         playerInSightRange = playerInSightSphere && HasLineOfSight();
         playerInAttackRange = playerInAttackSphere && HasLineOfSight();
-
-        bool isDetected = playerInSightRange || playerInAttackRange;
-        if (isDetected && !wasPlayerDetected)
-        {
-            enemyDetectedEvent?.RaiseEvent();
-        }
-        wasPlayerDetected = isDetected;
 
         if (!playerInSightRange && !playerInAttackRange) Patroling();
         else if (playerInSightRange && !playerInAttackRange) ChasePlayer();

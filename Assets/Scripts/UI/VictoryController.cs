@@ -6,11 +6,8 @@ public class VictoryController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // Only trigger victory when the local player enters
-        if (other.CompareTag("Player"))
-        {
-            if (hudController != null)
-                hudController.ShowVictoryUI();
-        }
+        // Direct victory UI invocation removed to prevent bypassing GameManager.
+        // Victory is raised exclusively by PuzzleManager (via PlayerWonEvent) when reaching the active unlocked exit,
+        // allowing GameManager to properly handle Game Over priority, enemy freezing, and input disabling.
     }
 }

@@ -193,6 +193,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CrateController
   visualRenderers: []
   keyCrateColor: {r: 0, g: 1, b: 0.030938268, a: 1}
+  specialCrateReachedGoalEvent: {fileID: 11400000, guid: 3d3e90a05b024653bfa19624bc09ac4e, type: 2}
 --- !u!108 &7635659868114487876
 Light:
   m_ObjectHideFlags: 0

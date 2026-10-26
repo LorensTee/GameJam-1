@@ -27407,7 +27407,7 @@ MonoBehaviour:
     m_Bits: 512
   detectionRange: 4
   beamAngle: 45
-  enemyDetectedEvent: {fileID: 0}
+  enemyDetectedEvent: {fileID: 11400000, guid: c912226335bf40ba929f21cb69539e00, type: 2}
 --- !u!114 &709703236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74991,9 +74991,9 @@ MonoBehaviour:
   maxLives: 3
   respawnPoint: {fileID: 4360929012394995122}
   respawnDelay: 1
-  playerDiedEvent: {fileID: 0}
-  healthChangedEvent: {fileID: 0}
-  gameManager: {fileID: 0}
+  playerDiedEvent: {fileID: 11400000, guid: 9e739ab835a14cdc9e682e9c41d3312c, type: 2}
+  healthChangedEvent: {fileID: 11400000, guid: fc3e2d3cca19429088bc1903ef84f543, type: 2}
+  gameManager: {fileID: 922190574}
   hudController: {fileID: 1257199805}
   gridMover: {fileID: 429583415}
 --- !u!1 &2015513655

@@ -12,7 +12,7 @@ public class EnemyPath : MonoBehaviour
 
     private void Awake()
     {
-        // Pick a random starting index on startup if pathType is set to Random
+        //random start idx
         if (pathType == PathType.Random && waypoints != null && waypoints.Length > 0)
         {
             index = Random.Range(0, waypoints.Length);
@@ -39,7 +39,6 @@ public class EnemyPath : MonoBehaviour
         if (pathType == PathType.Random)
         {
             int nextIndex;
-            // Select a random index that is different from the current one
             do
             {
                 nextIndex = Random.Range(0, waypoints.Length);
@@ -49,7 +48,6 @@ public class EnemyPath : MonoBehaviour
             return nextIndex;
         }
 
-        // Sequential movement (Loop / PingPong)
         index += direction;
         
         if (pathType == PathType.Loop)
@@ -72,7 +70,6 @@ public class EnemyPath : MonoBehaviour
     {
         if (waypoints == null || waypoints.Length == 0) return;
 
-        // Draw red spheres at each waypoint position
         Gizmos.color = Color.red;
         foreach (Transform waypoint in waypoints)
         {
@@ -80,10 +77,8 @@ public class EnemyPath : MonoBehaviour
                 Gizmos.DrawSphere(waypoint.position, 0.3f);
         }
 
-        // Draw connecting lines based on PathType
         if (pathType == PathType.Random)
         {
-            // Draw yellow star-burst lines from every waypoint to every other waypoint to visualize random links
             Gizmos.color = Color.yellow;
             for (int i = 0; i < waypoints.Length; i++)
             {
@@ -98,7 +93,6 @@ public class EnemyPath : MonoBehaviour
         }
         else
         {
-            // Draw white lines connecting sequential waypoints
             Gizmos.color = Color.white;
             for (int i = 0; i < waypoints.Length - 1; i++)
             {
@@ -108,7 +102,6 @@ public class EnemyPath : MonoBehaviour
                 }
             }
 
-            // Draw loop closing line if PathType is set to Loop
             if (pathType == PathType.Loop && waypoints.Length > 1)
             {
                 if (waypoints[waypoints.Length - 1] != null && waypoints[0] != null)

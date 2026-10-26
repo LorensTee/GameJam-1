@@ -6,7 +6,6 @@ public enum CellType
     Wall,
     Crate,
     Player,
-    Goal
 }
 
 public class Node

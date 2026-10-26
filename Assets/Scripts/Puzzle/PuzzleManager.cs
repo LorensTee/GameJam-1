@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,7 +19,6 @@ public class PuzzleManager : MonoBehaviour
 
     [Header("Event Channels")]
     [SerializeField] private GameEventChannelSO playerWonEvent;
-    [SerializeField] private GameEventChannelSO exitUnlockedEvent;
 
     private sealed class CrateStartData
     {
@@ -43,8 +41,6 @@ public class PuzzleManager : MonoBehaviour
     public CrateController CurrentKeyCrate => currentKeyCrate;
     
     public ExitDoor ActiveExit => activeExit;
-    
-    public event Action<ExitDoor> OnVictoryReached;
 
     private IEnumerator Start()
     {
@@ -533,7 +529,6 @@ public class PuzzleManager : MonoBehaviour
             return;
 
         activeExit.SetUnlocked(true);
-        exitUnlockedEvent?.RaiseEvent();
         Debug.Log($"Key crate locked in the keyhole. Exit '{activeExit.name}' is unlocked.", this);
     }
 
@@ -542,7 +537,6 @@ public class PuzzleManager : MonoBehaviour
         if (door == null || door != activeExit || !door.IsOpen)
             return;
 
-        OnVictoryReached?.Invoke(door);
         playerWonEvent?.RaiseEvent();
     }
 }

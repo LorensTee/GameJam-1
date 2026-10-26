@@ -16442,7 +16442,6 @@ MonoBehaviour:
   respawnPoint: {fileID: 4360929012394995122}
   respawnDelay: 1
   playerDiedEvent: {fileID: 11400000, guid: 9e739ab835a14cdc9e682e9c41d3312c, type: 2}
-  healthChangedEvent: {fileID: 11400000, guid: fc3e2d3cca19429088bc1903ef84f543, type: 2}
   gameManager: {fileID: 922190574}
   hudController: {fileID: 1257199805}
   gridMover: {fileID: 429583415}
@@ -27403,7 +27402,6 @@ MonoBehaviour:
     m_Bits: 512
   detectionRange: 4
   beamAngle: 45
-  enemyDetectedEvent: {fileID: 11400000, guid: c912226335bf40ba929f21cb69539e00, type: 2}
 --- !u!114 &709703236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36512,7 +36510,6 @@ MonoBehaviour:
   currentState: 0
   playerDiedEvent: {fileID: 11400000, guid: 9e739ab835a14cdc9e682e9c41d3312c, type: 2}
   playerWonEvent: {fileID: 11400000, guid: a292fa0f226b44179137021c3d3ef436, type: 2}
-  levelRestartedEvent: {fileID: 11400000, guid: beb270e5cb8745ae98e5fab1022b8b6d, type: 2}
   playerController: {fileID: 429583421}
   hudController: {fileID: 1257199805}
 --- !u!1001 &922670247
@@ -74988,7 +74985,6 @@ MonoBehaviour:
   respawnPoint: {fileID: 4360929012394995122}
   respawnDelay: 1
   playerDiedEvent: {fileID: 11400000, guid: 9e739ab835a14cdc9e682e9c41d3312c, type: 2}
-  healthChangedEvent: {fileID: 11400000, guid: fc3e2d3cca19429088bc1903ef84f543, type: 2}
   gameManager: {fileID: 922190574}
   hudController: {fileID: 1257199805}
   gridMover: {fileID: 429583415}
@@ -75237,7 +75233,6 @@ MonoBehaviour:
   - {fileID: 1207592241}
   initializationTimeoutSeconds: 10
   playerWonEvent: {fileID: 11400000, guid: a292fa0f226b44179137021c3d3ef436, type: 2}
-  exitUnlockedEvent: {fileID: 11400000, guid: 9b7fe132425c46f1860860af99acd716, type: 2}
 --- !u!1001 &2027296279
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -12,7 +12,6 @@ public class PlayerHealth : MonoBehaviour
 
     [Header("Event Channels")]
     [SerializeField] private GameEventChannelSO playerDiedEvent;
-    [SerializeField] private GameEventChannelSO healthChangedEvent;
 
     [Header("Game Manager")]
     [SerializeField] private GameManager gameManager;
@@ -52,8 +51,6 @@ public class PlayerHealth : MonoBehaviour
 
         if (hudController != null)
             hudController.UpdateHealthUI(lives);
-
-        healthChangedEvent?.RaiseEvent();
 
         if (lives <= 0)
         {

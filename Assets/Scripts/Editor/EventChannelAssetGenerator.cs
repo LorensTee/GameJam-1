@@ -8,14 +8,8 @@ public static class EventChannelAssetGenerator
 
     private static readonly string[] EventAssetNames =
     {
-        "EnemyDetectedEvent",
-        "EnemyTouchedPlayerEvent",
-        "HealthChangedEvent",
-        "SpecialCrateReachedGoalEvent",
-        "ExitUnlockedEvent",
         "PlayerDiedEvent",
-        "PlayerWonEvent",
-        "LevelRestartedEvent"
+        "PlayerWonEvent"
     };
 
     [MenuItem("Tools/Generate Game Event Assets")]

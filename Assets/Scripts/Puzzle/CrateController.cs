@@ -12,8 +12,6 @@ public class CrateController : MonoBehaviour
     
     private GridMover gridMover;
     private GridManager gridManager;
-    [Header("Event Channels")]
-    [SerializeField] private GameEventChannelSO specialCrateReachedGoalEvent;
 
     private Renderer[] cachedRenderers;
     private MaterialPropertyBlock[] originalPropertyBlocks;
@@ -130,7 +128,6 @@ public class CrateController : MonoBehaviour
         hasLockedCell = true;
         IsLockedInSlot = true;
 
-        specialCrateReachedGoalEvent?.RaiseEvent();
         OnLockedInSlot?.Invoke(this);
         return true;
     }

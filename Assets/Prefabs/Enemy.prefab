@@ -148,7 +148,6 @@ MonoBehaviour:
   whatIsObstacle:
     serializedVersion: 2
     m_Bits: 512
-  enemyTouchedPlayerEvent: {fileID: 11400000, guid: 420269433d094ef887dfe07a2179e0b9, type: 2}
 --- !u!195 &7574955592677664577
 NavMeshAgent:
   m_ObjectHideFlags: 0

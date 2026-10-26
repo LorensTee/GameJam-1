@@ -19,7 +19,6 @@ public class GameManager : MonoBehaviour
     [Header("Event Channels")]
     [SerializeField] private GameEventChannelSO playerDiedEvent;
     [SerializeField] private GameEventChannelSO playerWonEvent;
-    [SerializeField] private GameEventChannelSO levelRestartedEvent;
 
     [Header("Dependencies")]
     [SerializeField] private PlayerController playerController;
@@ -27,8 +26,6 @@ public class GameManager : MonoBehaviour
 
     private bool deathReported;
     private bool victoryReported;
-
-    private static bool isRestarting = false;
 
     private void Awake()
     {
@@ -50,12 +47,6 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Time.timeScale = 1f;
-
-        if (isRestarting)
-        {
-            isRestarting = false;
-            levelRestartedEvent?.RaiseEvent();
-        }
     }
 
     private void OnEnable()
@@ -152,7 +143,6 @@ public class GameManager : MonoBehaviour
 
     public void RestartLevel()
     {
-        isRestarting = true;
         Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

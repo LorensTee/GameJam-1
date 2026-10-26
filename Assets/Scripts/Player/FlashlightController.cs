@@ -18,8 +18,6 @@ public class FlashlightController : MonoBehaviour
     [SerializeField, Range(1f, 179f)]
     private float beamAngle = 45f;
 
-    [Header("Events")]
-    [SerializeField] private GameEventChannelSO enemyDetectedEvent;
 
     private GameObject[] enemies;
     private HashSet<EnemyController> detectedEnemies = new();
@@ -71,11 +69,6 @@ public class FlashlightController : MonoBehaviour
 
                     if (controller != null)
                     {
-                        if (!detectedEnemies.Contains(controller))
-                        {
-                            enemyDetectedEvent?.RaiseEvent();
-                        }
-
                         currentlyDetected.Add(controller);
                         controller.SetFrozen(true);
                     }

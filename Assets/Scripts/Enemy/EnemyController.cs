@@ -25,8 +25,6 @@ public class EnemyController : MonoBehaviour
     [Header("Layer Masks")]
     public LayerMask whatIsGround, whatIsPlayer, whatIsObstacle;
 
-    [Header("Event Channels")]
-    [SerializeField] private GameEventChannelSO enemyTouchedPlayerEvent;
 
     private Animator animator;
 
@@ -136,7 +134,6 @@ public class EnemyController : MonoBehaviour
         if (!isPlayer) return;
 
         print("Enemy caught the player!");
-        enemyTouchedPlayerEvent?.RaiseEvent();
 
         HUDController hud = FindAnyObjectByType<HUDController>();
         if (hud != null)

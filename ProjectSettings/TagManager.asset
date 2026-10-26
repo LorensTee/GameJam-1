@@ -9,6 +9,8 @@ TagManager:
   - Wall
   - Crate
   - Enemy
+  - Ceiling
+  - Light
   layers:
   - Default
   - TransparentFX

@@ -17,7 +17,7 @@ public class EnemyController : MonoBehaviour
     [Header("Detection & Combat")]
     public float timeBetweenAttacks;
     private bool alreadyAttacked;
-    private bool isRespawning; // Prevents multiple trigger calls during the pause
+    private bool isRespawning;
 
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
@@ -41,7 +41,6 @@ public class EnemyController : MonoBehaviour
 
     private void Start()
     {
-        // Initialize path destination if a path is assigned
         if (path != null)
         {
             agent.SetDestination(path.GetCurrentWayPoint());
@@ -50,21 +49,16 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
-        // Ignore update logic while paused/respawning
         if (isRespawning || isFrozen) return;
 
-        // Safety check to ensure agent is placed on a NavMesh
         if (!agent.isActiveAndEnabled || !agent.isOnNavMesh) return;
 
-        // Check if player is within sphere range
         bool playerInSightSphere = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         bool playerInAttackSphere = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
-        // Verify line of sight (no obstacles in between)
         playerInSightRange = playerInSightSphere && HasLineOfSight();
         playerInAttackRange = playerInAttackSphere && HasLineOfSight();
 
-        // State Machine
         if (!playerInSightRange && !playerInAttackRange) Patroling();
         else if (playerInSightRange && !playerInAttackRange) ChasePlayer();
         else if (playerInSightRange && playerInAttackRange) AttackPlayer();
@@ -88,7 +82,6 @@ public class EnemyController : MonoBehaviour
 
         if (path == null) return;
 
-        // Check if the agent has reached the waypoint
         if (!agent.pathPending && agent.remainingDistance <= 0.2f)
         {
             waypointWaitTimer += Time.deltaTime;
@@ -106,7 +99,7 @@ public class EnemyController : MonoBehaviour
         if (agent.isStopped) 
             agent.isStopped = false;
 
-        waypointWaitTimer = 0f; // Reset waypoint wait timer while chasing
+        waypointWaitTimer = 0f;
         agent.SetDestination(player.position);
     }
 
@@ -139,7 +132,7 @@ public class EnemyController : MonoBehaviour
 
         if (!isPlayer) return;
 
-        Debug.Log("Enemy caught the player!");
+        print("Enemy caught the player!");
 
         PlayerHealth playerHealth =
             GameObject.Find("PlayerRoot").GetComponent<PlayerHealth>();
@@ -156,17 +149,13 @@ public class EnemyController : MonoBehaviour
     {
         isRespawning = true;
         
-        // Stop movement and reset pathfinding
         agent.isStopped = true;
         agent.ResetPath();
 
-        // Teleport agent safely using Warp to keep it attached to the NavMesh
         agent.Warp(respawnPoint);
 
-        // Pause for 1 second
         yield return new WaitForSeconds(1f);
 
-        // Resume patrol pathing
         if (path != null)
         {
             agent.SetDestination(path.GetCurrentWayPoint());

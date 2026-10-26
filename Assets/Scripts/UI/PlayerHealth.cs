@@ -47,11 +47,10 @@ public class PlayerHealth : MonoBehaviour
 
         if (lives <= 0)
         {
-            Debug.Log("Game Over! No lives remaining.");
+            print("Game Over! No lives remaining.");
+            StartCoroutine(RespawnSequence());
             return;
         }
-
-        StartCoroutine(RespawnSequence());
     }
 
     private IEnumerator RespawnSequence()

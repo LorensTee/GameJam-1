@@ -143,7 +143,10 @@ public class GameManager : MonoBehaviour
         }
         else if (outcome == GameState.Victory)
         {
-            Debug.Log("GameManager: Victory achieved! Ready for groupmate's victory UI.", this);
+            if (hudController != null)
+            {
+                hudController.ShowVictoryUI();
+            }
         }
     }
 
